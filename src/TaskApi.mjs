@@ -1,6 +1,6 @@
 import {tasksStaticData} from "./TasksStaticData.mjs";
 
-let saveTaskData = null;
+
 
 export function FindTask(name, saved = true) {
     if (saved) {
@@ -21,11 +21,13 @@ function LoadTasks(taskList) {
     return tasks
 }
 export function LoadTask(task) {
+    task.currentCode = task.template;
     let loadState = window.localStorage.getItem(task.name)
     if (loadState) {
         loadState = JSON.parse(loadState);
         Object.assign(task, loadState);
     }
+
     return task
 }
 export function SaveTask(task) {
@@ -33,11 +35,13 @@ export function SaveTask(task) {
     window.localStorage.setItem(task.name, JSON.stringify(savedState))
 }
 
+let saveTaskData = null;
+
 export function GetTaskData() {
-    if (!saveTaskData){
-        saveTaskData = LoadTask(tasksStaticData);
+    if (saveTaskData == null){
+        saveTaskData = LoadTasks(tasksStaticData);
     }
-    return saveTaskData
+    return saveTaskData;
 }
 
 export default {FindTask, SaveTask, GetTaskData}
