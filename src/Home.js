@@ -1,5 +1,5 @@
 import React from "react";
-import {GetTaskData} from "./TaskApi.mjs";
+import {GetTaskData} from "./TaskApi";
 import {TaskCardsComponent} from "./TaskCardsComponent";
 import {Typography} from "antd";
 

@@ -61,43 +61,28 @@ const BreadCrumbComponent = () => {
         </Breadcrumb>)
 }
 
+const items = [
+    { label: <Link to="/">Home</Link>, key: '1', icon: <HomeOutlined/> }, // remember to pass the key prop
+    {
+        label: 'Task Edit',
+        key: '2',
+        icon: <EditOutlined/>,
+        children: [
+            { label: <Link to="TaskRedactor">New Task</Link>, key: '21' },
+            { label: <Link to="/TaskRedactor/Tasks">Edit Task</Link>, key: '22' }
+        ]
+    }
+];
 
 class App extends React.Component {
-    state = {
-        collapsed: false,
-    }
-
-
-    onCollapse = async collapsed => {
-        console.log(collapsed);
-        this.setState({collapsed});
-    };
-
     render() {
-        //const {collapsed} = this.state;
         return (
-            <BrowserRouter>
+            <BrowserRouter basename={process.env.PUBLIC_URL}>
                 <Layout style={{minHeight: '100vh'}}>
-                    {/*<Sider collapsible collapsed={collapsed} onCollapse={this.onCollapse}>*/}
-                    {/*    <div className="logo"/>*/}
-
-                    {/*</Sider>*/}
                     <Layout className="site-layout">
                         <Header className="site-layout-background" style={{padding: 0}}>
                             <Menu defaultSelectedKeys={['1']}
-                                  mode="horizontal">
-                                <Menu.Item key="1" icon={<HomeOutlined/>}>
-                                    <Link to="/">Home</Link>
-                                </Menu.Item>
-                                <Menu.SubMenu key="2" icon={<EditOutlined/>} title={"Task Edit"}>
-
-                                    <Menu.Item key={"21"}>
-                                        <Link to="TaskRedactor">New Task</Link>
-                                    </Menu.Item>
-                                    <Menu.Item key={"22"}>
-                                        <Link to="/TaskRedactor/Tasks">Edit Task</Link>
-                                    </Menu.Item>
-                                </Menu.SubMenu>
+                                  mode="horizontal" items={items}>
                             </Menu>
                         </Header>
                         <Content style={{margin: '0 16px'}}>
@@ -115,7 +100,7 @@ class App extends React.Component {
                                     <Route path={"/TaskRedactor/Tasks"} element={<TasksCardsEditComponent/>}/>
 
 
-                                    <Route path={`TaskRedactor/Tasks/:id`}
+                                    <Route path={`/TaskRedactor/Tasks/:id`}
                                            element={<TaskRedactorRouteComponent/>}/>
 
                                 </Routes>

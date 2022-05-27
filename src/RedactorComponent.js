@@ -1,13 +1,12 @@
 import React from "react";
-import {Card, Col, Row, Tabs, Typography, Input, Button, Divider, Select} from "antd";
-import {Link} from "react-router-dom"
+import {Col, Row, Tabs, Typography, Input, Button, Divider} from "antd";
 import AceEditor from "react-ace";
 import ReactMarkdown from "react-markdown";
 import {TaskTemplate} from "./TaskTemplate";
-import {tasksStaticData} from "./TasksStaticData.mjs";
+import {tasksStaticData} from "./TasksStaticData";
 import {TaskCardsComponent} from "./TaskCardsComponent";
-import {useParams} from "react-router";
-import {FindTask} from "./TaskApi.mjs";
+import {useParams} from "react-router-dom";
+import {FindTask} from "./TaskApi";
 
 
 function MarkdownPreviewComponent(props) {
@@ -67,20 +66,12 @@ export class TaskRedactorComponent extends React.Component {
         console.log(task)
         await navigator.clipboard.writeText(task)
     }
-    openTask = () => {
-        this.setState({topic: "dasda"});
-    }
 
     render() {
-        console.log(this.params)
-        console.log(this.state.template)
         return (
             <Row>
                 <Col flex="2" style={{margin: '0 16px'}}>
                     <Tabs onChange={this.onTabChange}>
-                        {/*<Tabs.TabPane tab="Topic" key="topic">*/}
-                        {/*    <Input onChange={this.onTopicChange} value={this.state.topic}/>*/}
-                        {/*</Tabs.TabPane>*/}
                         <Tabs.TabPane tab="Name" key="name">
                             <Input onChange={this.onNameChange} value={this.state.name}/>
                         </Tabs.TabPane>
@@ -108,7 +99,7 @@ export class TaskRedactorComponent extends React.Component {
                         name="UNIQUE_ID_OF_DIV"
                         value={this.state.template}
                         defaultValue={""}
-                        height={400}
+                        //height={400}
                         width={"auto"}
                     />
                     <Divider/>
@@ -131,7 +122,6 @@ export class TaskRedactorComponent extends React.Component {
 }
 
 export class TasksCardsEditComponent extends React.Component {
-
     render() {
         return (<TaskCardsComponent tasks={tasksStaticData}>
         </TaskCardsComponent>)
@@ -139,7 +129,7 @@ export class TasksCardsEditComponent extends React.Component {
 }
 
 export function TaskRedactorRouteComponent() {
-    const params = useParams()
+    const params = useParams();
     return (
         <TaskRedactorComponent card={FindTask(params.id, false)}/>
     );
